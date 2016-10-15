@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="null"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>基于情感字典的文本情感分析 | Fan Yaoxin</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/4.2.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">基于情感字典的文本情感分析</h1><a id="logo" href="/.">Fan Yaoxin</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> Start</i></a><a href="/archives/"><i class="fa fa-archive"> Archiv</i></a><a href="/about/"><i class="fa fa-user"> Über</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">基于情感字典的文本情感分析</h1><div class="post-meta">Oct 16, 2016<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><h1 id="coding-utf-8"><a href="#coding-utf-8" class="headerlink" title="-- coding: utf-8 --"></a>-<em>- coding: utf-8 -</em>-</h1><p>“””<br>Created on Sat Apr 16 20:24:08 2016</p>
+<p>@author: FanYxxx<br>“””</p>
+<h1 id="coding-utf-8-1"><a href="#coding-utf-8-1" class="headerlink" title="-- coding: utf-8 --"></a>-<em>- coding: utf-8 -</em>-</h1><p>“””<br>Created on Thu Apr 14 11:11:54 2016</p>
+<p>@author: FanYxxx<br>“””</p>
+<p>import jieba</p>
+<p>##import jieba.posseg as pseg<br>import os<br>import time</p>
+<p>start= time.clock()<br>global countlines<br>countlines=0<br>global t</p>
+<p>def solve(m):  ##进行分段／分句<br>    global t<br>    global countlines<br>    text=[]<br>    for lines in m.readlines():<br>        lines=lines.replace(“\n”,””)<br>        text.append(lines)<br>        countlines=countlines+1<br>    m.close()</p>
+<pre><code>##for l in text:
+  ##  print(l)
+total_pos_score=0
+total_neg_score=0
+for l in text:
+    words=segmentation(l)
+    ##print(cut_sentence(words))
+    pos_score,neg_score=comment_sentiment_score(words)
+    total_pos_score=total_pos_score+pos_score
+    total_neg_score=total_neg_score+neg_score
+fpath= os.path.abspath(&apos;/Users/FanYxxx/百度云同步盘/textanalytics/result.txt&apos;)   
+f = open(fpath,&apos;a+&apos;,encoding=&apos;utf-8&apos;)
+totalpos=str(total_pos_score)
+totalneg=str(total_neg_score)
+print(f)
+f.write(t+&apos;\t&apos;+totalpos+&apos;\t&apos;+totalneg+&apos;\n&apos;)
+f.close
+</code></pre><p>def segmentation(sentence):<br>    seg_list = jieba.cut(sentence)<br>    seg_result = []<br>    for w in seg_list:<br>        seg_result.append(w)<br>    return seg_result </p>
+<p>def cut_sentence(words):<br>    words = words<br>    start = 0<br>    i = 0<br>    token = ‘meaningless’<br>    sents = []<br>    punt_list = ‘,.!?;~，。！？；～… ‘</p>
+<pre><code>#print &quot;punc_list&quot;, punt_list
+for word in words:
+    #print &quot;word&quot;, word
+    if word not in punt_list:   # 如果不是标点符号
+        #print &quot;word1&quot;, word
+        i += 1
+        token = list(words[start:i+2]).pop()
+        #print &quot;token:&quot;, token
+    elif word in punt_list and token in punt_list:  # 处理省略号
+        #print &quot;word2&quot;, word
+        i += 1
+        token = list(words[start:i+2]).pop()
+        #print &quot;token:&quot;, token
+    else:
+        #print &quot;word3&quot;, word
+        sents.append(words[start:i+1])   # 断句
+        start = i + 1
+        i += 1
+if start &lt; len(words):   # 处理最后的部分
+    sents.append(words[start:])
+return sents
+</code></pre><p>def getext(path):<br>    fpath=os.path.abspath(path)<br>    f=open(fpath,encoding=’utf-8’)<br>    return(f)<br>    f.close()</p>
+<p>def readict(path):<br>    f=getext(path)<br>    text1=[]<br>    for lines in f.readlines():<br>        lines=lines.replace(“\n”,””)<br>        text1.append(lines)</p>
+<pre><code>##print(text1)
+f.close()
+return(text1)
+</code></pre><p>##程度副词处理，根据程度副词的种类不同乘以不同的权值<br>def match(word, sentiment_value):<br>    if word in mostdict:<br>        sentiment_value <em>= 2.0<br>    elif word in verydict:<br>        sentiment_value </em>= 1.75<br>    elif word in moredict:<br>        sentiment_value <em>= 1.5<br>    elif word in ishdict:<br>        sentiment_value </em>= 1.2<br>    elif word in insufficientdict:<br>        sentiment_value *= 0.5<br>    elif word in overdict:</p>
+<pre><code>    #print &quot;inversedict&quot;, word
+    sentiment_value *= -1
+return sentiment_value
+</code></pre><p>##情感得分的最后处理，防止出现负数</p>
+<p>##求单条评论的情感倾向总得分<br>def comment_sentiment_score(comment):<br>    cuted = cut_sentence(comment)<br>    poscount=0<br>    negcount=0<br>    for sent in cuted:<br>        i=0  #记录扫描到的词的位置<br>        s=0  #记录情感词位置<br>        for word in sent:<br>            if word in posdict:<br>                poscount=poscount+1<br>                for w in sent[s:i]:<br>                    poscount=match(w,poscount)<br>            elif word in negdict:<br>                negcount=negcount+1<br>                for w in sent[s:i]:<br>                    negcount=match(w,negcount)<br>                s=i+1<br>            elif word==”!” or word==”！”:<br>                for w2 in sent[::-1]:<br>                    if w2 in posdict:<br>                        poscount=poscount+2<br>                        break<br>                    elif w2 in negdict:<br>                        negcount=negcount+2<br>                        break<br>            i=i+1<br>    return(poscount,negcount)</p>
+<p>print (“reading…”)<br>posdict = readict(‘/Users/FanYxxx/百度云同步盘/textanalytics/ntusd/positive.txt’)<br>negdict = readict(‘/Users/FanYxxx/百度云同步盘/textanalytics/ntusd/negative.txt’)</p>
+<h1 id="程度副词词典"><a href="#程度副词词典" class="headerlink" title="程度副词词典"></a>程度副词词典</h1><p>mostdict = readict(‘/Users/FanYxxx/百度云同步盘/textanalytics/ntusd/most.txt’)   # 权值为2<br>verydict = readict(‘/Users/FanYxxx/百度云同步盘/textanalytics/ntusd/very.txt’)   # 权值为1.5<br>moredict = readict(‘/Users/FanYxxx/百度云同步盘/textanalytics/ntusd/more.txt’)   # 权值为1.25<br>ishdict = readict(‘/Users/FanYxxx/百度云同步盘/textanalytics/ntusd/ish.txt’)   # 权值为0.5<br>insufficientdict = readict(‘/Users/FanYxxx/百度云同步盘/textanalytics/ntusd/insuf.txt’)  # 权值为0.25<br>overdict = readict(‘/Users/FanYxxx/百度云同步盘/textanalytics/ntusd/over.txt’)  # 权值为-1</p>
+<p>t=1</p>
+<p>##批量导入处理文本<br>while (t&lt;121):<br>    t=str(t)<br>    f=getext(‘/Users/FanYxxx/百度云同步盘/textanalytics/data3/‘+t+’.txt’)<br>    solve(f)<br>    t=int(t)<br>    t=t+1<br>end=time.clock()<br>print(end-start)</p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://fanyaoxin.com/2016/10/16/基于情感字典的文本情感分析/" data-id="ciubudbod0002w5kgvlqj7i6v" class="article-share-link">Aktie</a><div class="tags"><a href="/tags/python/">python</a><a href="/tags/文本处理/">文本处理</a></div><div class="post-nav"><a href="/2016/10/16/豆瓣电影top250爬虫/" class="next">豆瓣电影top250爬虫</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://fanyaoxin.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Kategorien</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/爱情/" style="font-size: 15px;">爱情</a> <a href="/tags/生活/" style="font-size: 15px;">生活</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/爬虫/" style="font-size: 15px;">爬虫</a> <a href="/tags/数据挖掘/" style="font-size: 15px;">数据挖掘</a> <a href="/tags/json/" style="font-size: 15px;">json</a> <a href="/tags/文本处理/" style="font-size: 15px;">文本处理</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/16/基于情感字典的文本情感分析/">基于情感字典的文本情感分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/16/豆瓣电影top250爬虫/">豆瓣电影top250爬虫</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/15/一些小事情/">一些小事情</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/13/电影数据处理与电影推荐/">电影数据处理与电影推荐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/12/小故事1/">小故事1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/hello-world/">Hello World</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Fan Yaoxin.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
