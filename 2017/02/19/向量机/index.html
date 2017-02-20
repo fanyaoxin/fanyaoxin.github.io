@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="null"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>向量机 | Fan Yaoxin</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/4.2.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">向量机</h1><a id="logo" href="/.">Fan Yaoxin</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> Start</i></a><a href="/archives/"><i class="fa fa-archive"> Archiv</i></a><a href="/about/"><i class="fa fa-user"> Über</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">向量机</h1><div class="post-meta">Feb 19, 2017<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><h3 id="支持向量机-support-vector-machine"><a href="#支持向量机-support-vector-machine" class="headerlink" title="支持向量机 support vector machine"></a>支持向量机 support vector machine</h3><ul>
+<li>二元分类器</li>
+<li>一些特征空间使用线性分割</li>
+<li>计算变量 而不是 学习变量</li>
+</ul>
+<p>目标是：</p>
+<p>构造一个超平面的分割（高维分割），这个分割距离两个class里面最近的元素都尽量远。</p>
+<p><img src="/Users/FanYxxx/Documents/截图/02-19-1.png" alt="02-19-1"></p>
+<p>distance between hyperplane and support vectors —— margin</p>
+<p>即：找到函数变量，使得</p>
+<ul>
+<li>在区分训练集上没有错误</li>
+<li>margin最大化</li>
+</ul>
+<h3 id="linear-SVMs-线性向量机"><a href="#linear-SVMs-线性向量机" class="headerlink" title="linear SVMs  线性向量机"></a>linear SVMs  线性向量机</h3><p><img src="/Users/FanYxxx/Documents/截图/0219-2.png" alt="0219-2"></p>
+<p><img src="/Users/FanYxxx/Documents/截图/02-19-3.png" alt="02-19-3"></p>
+<p>对于一般的线性判别分析,</p>
+<p>z (distance) = |f(x)|/ ||w||</p>
+<p>对于SVM , z=1/ ||w||</p>
+<p>所以，为了最大化margin，我们可以  min ||w||, min 1/2 ||w|| **2</p>
+<p>————这样就可以求的 合适的w （用拉格朗日啥子方法来求最值） （数学分析里有）</p>
+<h3 id="Non-separable-Data"><a href="#Non-separable-Data" class="headerlink" title="Non-separable Data"></a>Non-separable Data</h3><p>去处理非线性分割数据，限制要放松一些</p>
+<p>非线性分割数据，主要分成三类：</p>
+<ul>
+<li><p>在SV之外</p>
+</li>
+<li><p>在SV之中，但是分类对了</p>
+</li>
+<li><p>在SV之中，但是分类错了</p>
+<p><img src="/Users/FanYxxx/Documents/截图/02-19-04.png" alt="02-19-04"></p>
+<p>为了尽量分队，我们需要最小化 yipexilo的和</p>
+<p>这就是  soft-margin SVM</p>
+<p>最有目标： c<em>yipexilo的和+ 1/2 ||w|| *</em>2</p>
+</li>
+</ul>
+<h3 id="非线性-支持向量机-Nonlinear-SVMs"><a href="#非线性-支持向量机-Nonlinear-SVMs" class="headerlink" title="非线性 支持向量机  Nonlinear SVMs"></a>非线性 支持向量机  Nonlinear SVMs</h3><ol>
+<li>能处理线性分割数据或近似线性分割数据</li>
+<li>也能处理非线性分割数据，也要非线性分割数据，能通过一个映射函数，转化为 线性分割数据</li>
+</ol>
+<p><img src="/Users/FanYxxx/Documents/截图/19-02-03.png" alt="19-02-03"></p>
+<p>引入kernel function 来满足mercer’s therorem, 使得能够投影高维特征</p>
+<p>没有系统的方法来决定最好的kernel function 以及它的参数，通常通过trial 和error 来确认。</p>
+<h3 id="multi-class-SVMs"><a href="#multi-class-SVMs" class="headerlink" title="multi-class SVMs"></a>multi-class SVMs</h3><p>通过组合多个二元向量机，可以来处理多远分类问题</p>
+<p>例子：</p>
+<ol>
+<li>对一个三元分类问题 属于哪个wi：</li>
+</ol>
+<ul>
+<li>need to define R(R-1)/2=3 SVMs</li>
+<li>1 class1 vs class2</li>
+<li>2 class2 vs class3</li>
+<li>3 class3 vs class1</li>
+</ul>
+<p><img src="/Users/FanYxxx/Documents/截图/02-19-4.png" alt="02-19-4"></p>
+<ol>
+<li>对一个三元分类问题 属于哪个wi或者不属于哪个wi：</li>
+</ol>
+<p><img src="/Users/FanYxxx/Documents/截图/02-19-5.png" alt="02-19-5"></p>
+<ol>
+<li>如果是按顺序分类的多元向量机</li>
+</ol>
+<p><img src="/Users/FanYxxx/Documents/截图/02-19-6.png" alt="02-19-6"></p>
+<p>等等等等，不同的情况，不同考虑</p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://fanyaoxin.com/2017/02/19/向量机/" data-id="cizdwvupw000b9ikg933qk48t" class="article-share-link">Aktie</a><div class="tags"><a href="/tags/pattern-recognition/">pattern recognition</a></div><div class="post-nav"><a href="/2017/02/19/openAI-探索/" class="next">openAI 探索</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://fanyaoxin.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Kategorien</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/pattern-recognition/" style="font-size: 15px;">pattern recognition</a> <a href="/tags/database/" style="font-size: 15px;">database</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/数据分析/" style="font-size: 15px;">数据分析</a> <a href="/tags/可视化/" style="font-size: 15px;">可视化</a> <a href="/tags/强化学习/" style="font-size: 15px;">强化学习</a> <a href="/tags/生活/" style="font-size: 15px;">生活</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/机器学习/" style="font-size: 15px;">机器学习</a> <a href="/tags/文本处理/" style="font-size: 15px;">文本处理</a> <a href="/tags/爬虫/" style="font-size: 15px;">爬虫</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/19/向量机/">向量机</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/19/openAI-探索/">openAI 探索</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/10/神经网络/">神经网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/机器学习课程大纲/">机器学习课程大纲</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/25/机器学习笔记（一）/">机器学习笔记（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/05/noSQL/">noSQL</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/04/pandas/">pandas</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/22/python基础-pandas/">python基础-pandas</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/10/python基础-numpy/">python基础-numpy</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/09/python基础-3/">python基础(3)</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Fan Yaoxin.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
