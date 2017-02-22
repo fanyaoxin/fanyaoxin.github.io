@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="null"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>Numeric Data 分类 | Fan Yaoxin</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/4.2.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Numeric Data 分类</h1><a id="logo" href="/.">Fan Yaoxin</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> Start</i></a><a href="/archives/"><i class="fa fa-archive"> Archiv</i></a><a href="/about/"><i class="fa fa-user"> Über</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Numeric Data 分类</h1><div class="post-meta">Feb 21, 2017<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><h3 id="classification"><a href="#classification" class="headerlink" title="classification"></a>classification</h3><ul>
+<li>每个instance 都labelled</li>
+<li>learn how to label or classify unseen examples (finding a rule)</li>
+<li>two main steps: (主要针对Numeric)<ul>
+<li>training<ul>
+<li>select a portion of the existing data (training data)</li>
+<li>initialise the wi’s (to random values)</li>
+<li>apply the rule to the training set and (e.g.) count how many answers are correct ——— score</li>
+<li>adjust the wi’s (acound to some method)</li>
+<li>iterate back to step3 until the score is ‘good enough’</li>
+</ul>
+</li>
+<li>evaluation<ul>
+<li>select  test set</li>
+<li>apply the rule to the test set and compute the score</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>model<ul>
+<li>correlation and causation 是不同的</li>
+<li>两个变量可能相关，但可能不是因果关系 (隐变量)</li>
+<li><ul>
+<li>regression, when y is numeric</li>
+<li>classification, when y is nominal or categorical</li>
+</ul>
+</li>
+<li><ul>
+<li>parametric, if we make assumptions about the distribution</li>
+<li>non-parametric, if we do not make assumptions about the distribution (later)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>linear models</p>
+<ul>
+<li>can be used for classification problems by drawing a decision boundarys</li>
+</ul>
+<img src="/2017/02/21/Numberic-Data-分类/2.png" alt="2.png" title="">
+</li>
+</ul>
+<p>​       <img src="/2017/02/21/Numberic-Data-分类/3.png" alt="3.png" title=""></p>
+<p>目标是找到参数 w向量使得，训练集在线性方程上的误差最小</p>
+<ul>
+<li><p>用线性模型来分类</p>
+<ul>
+<li><p>让回归方程=0 ： 对于instances属于class</p>
+<p>​                    =1 ： 对于instances不属于class</p>
+</li>
+<li><p>对于要预测的instance带入方程，看最接近0/1</p>
+</li>
+</ul>
+</li>
+<li><p>线性模型的结构</p>
+  
+  
+<ul>
+<li>piecewise linear model</li>
+<li>non-linear spline model</li>
+<li>tree structure</li>
+</ul>
+</li>
+<li><p>逻辑回归</p>
+<p>对于一些数据集，效果比线性回归更好。</p>
+<p>比如说：当最小方差误差不是统计独立的，或者说不是正太分布的</p>
+<ul>
+<li><p>逻辑回归使用对数函数来进行转换，</p>
+
+</li>
+</ul>
+</li>
+<li><p>训练线性回归模型</p>
+<ul>
+<li><p>residuals (sum of squares of residuals)</p>
+</li>
+<li><p>two approaches to fit a linear regreesion (adjust the parameters)</p>
+<ul>
+<li><p>gradient descent</p>
+<p>using iterative search</p>
+<ul>
+<li>batch gradient descent (总的)</li>
+<li>stochastic gradient descent </li>
+</ul>
+</li>
+<li><p>ordinary least squares</p>
+<p>solve the problems analytically</p>
+<p>如果cost函数，是凸函数并且有全局最小值</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="perceptrons"><a href="#perceptrons" class="headerlink" title="perceptrons"></a>perceptrons</h3><p>another type of numeric model</p>
+<ol>
+<li>single-layer perceptrons</li>
+<li>multi-layer perceptrons (neural network)</li>
+</ol>
+<ul>
+<li><p>perceptron learning rule</p>
+<p>is an algorithm for finding a hyperplane </p>
+ 
+ 
+ 
+</li>
+<li><p>A threshold function can ensure that output is either 0 or 1.</p>
+ 
+</li>
+<li><p>multi-layer perceptrons</p>
+<p>is essentially a simple kind of neural network, with:</p>
+<ul>
+<li><p>input vector</p>
+</li>
+<li><p>intermediate ‘hidden’ values</p>
+</li>
+<li><p>threshold function</p>
+</li>
+<li><p>output value</p>
+ 
+ 
+<p>神经网络造成的分割是不平整的，意味着可以更加好的模拟现实的情况</p>
+</li>
+</ul>
+<p>​</p>
+<ul>
+<li><p>each layer is evaluated in sequence</p>
+<p>每一层都是按数列来evaluated的</p>
+ 
+</li>
+<li><p>training  process</p>
+<ul>
+<li>follow a steepest descent approach</li>
+<li>search the landscape of possible output values, and we want to descend from large errors to small (ideally 0) error</li>
+<li>weights are adjusted by moving backwards:<ul>
+<li>first from the hidden &lt;— output layer</li>
+<li>and then from the input &lt;— hidden layer </li>
+</ul>
+</li>
+<li>the amount of adjustment is proportional to the value of the error function<ul>
+<li>big errors  =&gt; big adjustments</li>
+<li>small errors =&gt; small adjustments</li>
+</ul>
+</li>
+<li>the error rate should decline during the training process</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="probailistic-models"><a href="#probailistic-models" class="headerlink" title="probailistic models"></a>probailistic models</h3><p>probability theory  ——— the interpretation of probability</p>
+<p>probability calculus —— computing probabilities</p>
+<ul>
+<li><p>two viewpoints</p>
+<ul>
+<li><p>a frequentist view: 频率学派</p>
+<p>大量重复试验后，趋向一个分布———— 参数是存在，而且固定的</p>
+</li>
+<li><p>a sujective view： 客观学派，从客观的角度观察</p>
+<p>又叫：贝叶斯学派</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>features in a joint density plot:<ul>
+<li>peak (most frequent value , mode)</li>
+<li>valley (least frequent value)</li>
+<li>hole or gap (missing value)</li>
+</ul>
+</li>
+</ul>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://fanyaoxin.com/2017/02/21/Numberic-Data-分类/" data-id="cizhcvw9p0001gokgz3uhsl9r" class="article-share-link">Aktie</a><div class="tags"><a href="/tags/classification/">classification</a></div><div class="post-nav"><a href="/2017/02/21/Nominal-Data-分类/" class="pre">Nominal Data 分类</a><a href="/2017/02/20/数据挖掘（介绍）/" class="next">数据挖掘（介绍）</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://fanyaoxin.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Kategorien</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/pattern-recognition/" style="font-size: 15px;">pattern recognition</a> <a href="/tags/database/" style="font-size: 15px;">database</a> <a href="/tags/强化学习/" style="font-size: 15px;">强化学习</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/数据分析/" style="font-size: 15px;">数据分析</a> <a href="/tags/可视化/" style="font-size: 15px;">可视化</a> <a href="/tags/生活/" style="font-size: 15px;">生活</a> <a href="/tags/classification/" style="font-size: 15px;">classification</a> <a href="/tags/模式识别/" style="font-size: 15px;">模式识别</a> <a href="/tags/文本处理/" style="font-size: 15px;">文本处理</a> <a href="/tags/数据挖掘/" style="font-size: 15px;">数据挖掘</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/机器学习/" style="font-size: 15px;">机器学习</a> <a href="/tags/爬虫/" style="font-size: 15px;">爬虫</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/Nominal-Data-分类/">Nominal Data 分类</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/Numberic-Data-分类/">Numeric Data 分类</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/数据挖掘（介绍）/">数据挖掘（介绍）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/支持向量机/">支持向量机</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/19/向量机/">向量机</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/19/openAI-探索/">openAI 探索</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/10/神经网络/">神经网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/机器学习课程大纲/">机器学习课程大纲</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/25/机器学习笔记（一）/">机器学习笔记（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/05/noSQL/">noSQL</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Fan Yaoxin.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

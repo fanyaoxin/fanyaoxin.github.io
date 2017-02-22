@@ -1,0 +1,235 @@
+<!DOCTYPE html><html lang="null"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>Nominal Data 分类 | Fan Yaoxin</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/4.2.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Nominal Data 分类</h1><a id="logo" href="/.">Fan Yaoxin</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> Start</i></a><a href="/archives/"><i class="fa fa-archive"> Archiv</i></a><a href="/about/"><i class="fa fa-user"> Über</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Nominal Data 分类</h1><div class="post-meta">Feb 21, 2017<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><h3 id="rules"><a href="#rules" class="headerlink" title="rules"></a>rules</h3><p>if ……….. then ……</p>
+<h3 id="1R-or-1-rule"><a href="#1R-or-1-rule" class="headerlink" title="1R or 1-rule"></a>1R or 1-rule</h3><p>one-level decision tree——— in the form of a set of rules that all test one particular attributes.</p>
+<p>只判断一个attribute,来构建rule，并选择smallest error rates的attribute</p>
+<ul>
+<li><p>as for numeric attributes</p>
+<p>把数值按大小顺序排，按yes／no（不同class labell）分割成区间</p>
+</li>
+</ul>
+<h3 id="covering-algorithms"><a href="#covering-algorithms" class="headerlink" title="covering algorithms"></a>covering algorithms</h3><p>constructing rules</p>
+<p>at each stage you identify a rule that “covers” some of the instances </p>
+<p>决策树是，从上而下，找到最好的节点来分割数据。</p>
+<p>covering rules是考虑每个class，并找到一个方法把所有的instances都cover掉。</p>
+<p>比如说，先找a的covering rules，再找b的。</p>
+<h3 id="evaluating-rules"><a href="#evaluating-rules" class="headerlink" title="evaluating rules"></a>evaluating rules</h3><ul>
+<li>confusion matrix </li>
+<li>accuracy:  预测对的／总的</li>
+</ul>
+<h3 id="growing-decision-trees"><a href="#growing-decision-trees" class="headerlink" title="growing decision trees"></a>growing decision trees</h3><p>所有符号等可能出现的情况下，熵值最大</p>
+<p>尝试每个attribute，找到最好的split</p>
+<img src="/2017/02/21/Nominal-Data-分类/1.png" alt="1.png" title="">
+<p>主要三种算法：</p>
+<p>​    information gain: </p>
+<p>​        after_split(info())  —    before_split(info())</p>
+<img src="/2017/02/21/Nominal-Data-分类/2.png" alt="2.png" title="">
+<img src="/2017/02/21/Nominal-Data-分类/3.png" alt="3.png" title="">
+<p>information gain 是由attributes是否有大量可能性的value决定大小的，</p>
+<p>但有时候是ID code attributes，每个都不同，这样可能导致两种情况</p>
+<ol>
+<li>训练集不可能包含每个ID code</li>
+<li>每片叶子（因为按id分开了）可能都会只有一个instance——— 即绝对最大</li>
+</ol>
+<p>所以 引入新的split想法：</p>
+<p>   gain_ratio = info(root)/info(new_split) ——-why？</p>
+<p>（有时候gain_ratio也不行，会对信息量低的node产生过度补偿）</p>
+<p>一个通用的方法是，尝试每个attribute的information gain ratio 然后选择最大的。</p>
+<p>决策树和covering rules的主要区别：</p>
+<ul>
+<li>Covering Rules operate by adding conditions to the rule underconstruction with the objective of maximum accuracy</li>
+<li>Divide and Conquer operate by adding conditions to the splitunder construction to maximise separation.</li>
+</ul>
+<ul>
+<li><p>CART  （split考虑的是元素的分布情况，homogeneity）</p>
+<ul>
+<li><p>classification and regression trees</p>
+</li>
+<li><p>单次二元决策 univariate binary decisions </p>
+<p>每次只考虑一个variable，考虑yes-no</p>
+</li>
+<li><p>算法过程：</p>
+<ul>
+<li>找最好attribute来split （分成两块，使得homogeneity最大，data_after_split分布均匀）</li>
+<li>继续分，循环</li>
+<li>prune（修剪），最最小predictive power的branches剪掉</li>
+</ul>
+</li>
+<li><p>一些小改进方法</p>
+<ul>
+<li><p>用cross-validation 来评估error rate （5部分，轮流训练test的那个方法）</p>
+<p>dataset 分为training set 和 test set, 再循环，</p>
+<p>每次循环，score都computed，然后average score就是overall cross-validation estimate 对于一个特定size的tree</p>
+<p>最后：树的size和score都用来评估决定最后的tree</p>
+<p>​</p>
+</li>
+</ul>
+</li>
+<li><p>scoring:</p>
+<img src="/2017/02/21/Nominal-Data-分类/4.png" alt="4.png" title="">
+<img src="/2017/02/21/Nominal-Data-分类/5.png" alt="5.png" title="">
+</li>
+</ul>
+<p>​</p>
+<ul>
+<li><p>greedy local search 用来寻找candidate tree structures</p>
+<ul>
+<li><p>function: (how well split the data)</p>
+<ul>
+<li><p>gini index</p>
+<ul>
+<li><p>measure of population diversity</p>
+<img src="/2017/02/21/Nominal-Data-分类/7.png" alt="7.png" title="">
+</li>
+</ul>
+</li>
+<li><p>twoing criterion</p>
+<img src="/2017/02/21/Nominal-Data-分类/6.png" alt="6.png" title="">
+<p>每种分割的可能性都会被考虑，直到一个maximal tree is constructed， 然后branches 被prune 来寻找最优tree size</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>CART 使用 cost_complexity pruning</p>
+<p>两个步骤</p>
+<ul>
+<li><p>build sequence of trees T0 (largest ),T1,…,Tn (smallest)</p>
+<p>按树的大小顺序排列</p>
+</li>
+<li><p>select the smallest error </p>
+<p>选择树来prune，选择的依据是树的error rate</p>
+<img src="/2017/02/21/Nominal-Data-分类/8.png" alt="8.png" title="">
+</li>
+<li><p>删除哪片叶子？？</p>
+<p>​</p>
+<p>​</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>ID3</p>
+<ul>
+<li><p>算法</p>
+<ul>
+<li><p>a window is chosen randomly，which is a subset of the training set</p>
+<p>随机，从训练集里，选择一个镜面</p>
+</li>
+<li><p>a decision tree is formed from the window which correctly classifies all instances in the window</p>
+<p>以镜面为基础，构建一个能正确分类所有镜面里instances的决策树</p>
+</li>
+<li><p>then the decision tree is applied to all the other instances in the training set</p>
+<p>然后这个决策树被应用到训练集里的其他instances上</p>
+</li>
+<li><p>if this decision tree correctly classifies all the other instances in the training set， then we done</p>
+<p>如果这个决策树也能正确分类训练集里其他的instances，那么我们就结束了</p>
+</li>
+<li><p>if not， the incorretly classified instances are added to the window， and the process continues</p>
+<p>如果不，那么分类不对的训练集被加入镜面，并继续process</p>
+</li>
+</ul>
+</li>
+<li><p>interates through every unused attribute of the set S and calculate the entropy H(S). (information gain IG(S))</p>
+<img src="/2017/02/21/Nominal-Data-分类/9.png" alt="9.png" title="">
+<img src="/2017/02/21/Nominal-Data-分类/10.png" alt="10.png" title="">
+<p>越大越好，一开始信息最多，通过决策树分析（末端信息不多），说明树的信息多</p>
+<p>​</p>
+</li>
+</ul>
+</li>
+<li><p>PRISM： generating rules</p>
+<p>a algorithm for constructing rules that do response to ID3</p>
+<p>—— 能够获得最优rules</p>
+<p>算法：</p>
+<ul>
+<li><p>对每个class C </p>
+</li>
+<li><p>初始化一个instance set  E</p>
+</li>
+<li><p>如果E 包括 class C中的instances</p>
+<ul>
+<li>构建一个rule R ：  “if  。。。then C”</li>
+<li>直到R是perfect（没有attribute 可以用）<ul>
+<li>对于每个 attribute A不属于R，对于每个value ：<ul>
+<li>考虑增加 A=value to R</li>
+<li>选择 A 和 v 去最大化 p／t</li>
+</ul>
+</li>
+<li>增加 R+=【A=v】</li>
+</ul>
+</li>
+<li>从E中删除 被R cover 的instances </li>
+</ul>
+</li>
+<li><p>产生相互独立的 order-decision list （rule），因为rule与产生顺序无关，</p>
+<p>但是这会带来一个问题：一个instance 可能可以同时属于超过一个class （但在实际中，不会发生，一旦一个例子classify，rules 就会stop）</p>
+<p>​</p>
+<p>​</p>
+</li>
+</ul>
+</li>
+<li><p>C4.5</p>
+<ul>
+<li><p>extension of ID3 algorithm （加入了reduced error pruning）</p>
+<img src="/2017/02/21/Nominal-Data-分类/11.png" alt="11.png" title="">
+</li>
+<li><p>build decision trees from a set of training data in the same way as ID3.</p>
+</li>
+<li><p>the pruning process computes three values:</p>
+<img src="/2017/02/21/Nominal-Data-分类/12.png" alt="12.png" title="">
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="comparing-decision-tree-approaches"><a href="#comparing-decision-tree-approaches" class="headerlink" title="comparing decision tree approaches"></a>comparing decision tree approaches</h3><img src="/2017/02/21/Nominal-Data-分类/13.png" alt="13.png" title="">
+<ul>
+<li>other method<ul>
+<li>randomm forest</li>
+<li>gradient boosting tree</li>
+<li>xgboost</li>
+</ul>
+</li>
+</ul>
+<h3 id="decision-trees-vs-neural-networks"><a href="#decision-trees-vs-neural-networks" class="headerlink" title="decision trees vs neural networks"></a>decision trees vs neural networks</h3><h3 id="naive-bayes"><a href="#naive-bayes" class="headerlink" title="naive bayes"></a>naive bayes</h3><ul>
+<li>probabiity density</li>
+<li>prior probability</li>
+<li>posterior probability</li>
+</ul>
+<h3 id="evaluation"><a href="#evaluation" class="headerlink" title="evaluation"></a>evaluation</h3><ul>
+<li><p>overfitting</p>
+<p>too closely tied to training data</p>
+</li>
+<li><p>error_rate</p>
+</li>
+<li><p>cross-validation techniques</p>
+</li>
+<li><p>confusion matrix</p>
+<ul>
+<li><p>cohen’s kappa</p>
+</li>
+<li><p>cost-sensitive classification and learning</p>
+</li>
+<li><p>lift factor  / lift chart</p>
+<p>lift  = p (class sample)/p(class population)   样本／总体</p>
+<p>与不利用模型相比，运用模型后我们的预测能力“变好”了多少</p>
+<p>Lift = (d/b+d)/(c+d/a+b+c+d)=PV_plus/pi1)，这个指标需要多说两句。它衡量的是，与不利用模型相比，模型的预测能力“变好”了多少。不利用模型，我们只能利用“正例的比例是c+d/a+b+c+d”这个样本信息来估计正例的比例（baseline model），而利用模型之后，我们不需要从整个样本中来挑选正例，只需要从我们预测为正例的那个样本的子集（b+d）中挑选正例，这时预测的准确率为d/b+d。<br>显然，lift(提升指数)越大，模型的运行效果越好。如果这个模型的预测能力跟baseline model一样，那么d/b+d就等于c+d/a+b+c+d（lift等于1），这个模型就没有任何“提升”了（套一句金融市场的话，它的业绩没有跑过市场）。这个概念在数据库营销中非常有用，举个例子：<br>比如说你要向选定的1000人邮寄调查问卷（a+b+c+d=1000）。以往的经验告诉你大概20%的人会把填好的问卷寄回给你，即1000人中有200人会对你的问卷作出回应（response，c+d=200），用统计学的术语，我们说baseline response rate是20%（c+d/a+b+c+d=20%）。<br>如果你现在就漫天邮寄问卷，1000份你期望能收回200份，这可能达不到一次问卷调查所要求的回收率，比如说工作手册规定邮寄问卷回收率要在25%以上。<br>通过以前的问卷调查，你收集了关于问卷采访对象的相关资料，比如说年龄、教育程度之类。利用这些数据，你确定了哪类被访问者对问卷反应积极。假设你已经利用这些过去的数据建立了模型，这个模型把这1000人分了类，现在你可以从你的千人名单中挑选出反应最积极的100人来（b+d=100），这10%的人的反应率 (response rate)为60%（d/b+d=60%，d=60）。那么，对这100人的群体（我们称之为Top 10%），通过运用我们的模型，相对的提升(lift value)就为60%/20%=3；换句话说，与不运用模型而随机选择相比，运用模型而挑选，效果提升了3倍。</p>
+</li>
+<li><p>ROC</p>
+<p>receiver operating characteristic curves</p>
+<img src="/2017/02/21/Nominal-Data-分类/14.png" alt="14.png" title="">
+</li>
+</ul>
+</li>
+<li><p>precision:  TP/(TP+FP)  —— 命中率（正确结果）</p>
+</li>
+<li><p>recall: TP/ (TP+FN)  ——— 都是对的回响</p>
+</li>
+<li><p>F_measure= (2x recall x precision)/ (recall+precision) —— 平均数</p>
+</li>
+<li><p>other methods</p>
+<ul>
+<li>model averaging</li>
+<li>boosting</li>
+</ul>
+</li>
+</ul>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://fanyaoxin.com/2017/02/21/Nominal-Data-分类/" data-id="cizhcvwb60012gokgtfq638aq" class="article-share-link">Aktie</a><div class="tags"><a href="/tags/数据挖掘/">数据挖掘</a></div><div class="post-nav"><a href="/2017/02/21/Numberic-Data-分类/" class="next">Numeric Data 分类</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://fanyaoxin.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Kategorien</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/pattern-recognition/" style="font-size: 15px;">pattern recognition</a> <a href="/tags/database/" style="font-size: 15px;">database</a> <a href="/tags/强化学习/" style="font-size: 15px;">强化学习</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/数据分析/" style="font-size: 15px;">数据分析</a> <a href="/tags/可视化/" style="font-size: 15px;">可视化</a> <a href="/tags/生活/" style="font-size: 15px;">生活</a> <a href="/tags/classification/" style="font-size: 15px;">classification</a> <a href="/tags/模式识别/" style="font-size: 15px;">模式识别</a> <a href="/tags/文本处理/" style="font-size: 15px;">文本处理</a> <a href="/tags/数据挖掘/" style="font-size: 15px;">数据挖掘</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/机器学习/" style="font-size: 15px;">机器学习</a> <a href="/tags/爬虫/" style="font-size: 15px;">爬虫</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/Nominal-Data-分类/">Nominal Data 分类</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/Numberic-Data-分类/">Numeric Data 分类</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/数据挖掘（介绍）/">数据挖掘（介绍）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/支持向量机/">支持向量机</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/19/向量机/">向量机</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/19/openAI-探索/">openAI 探索</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/10/神经网络/">神经网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/机器学习课程大纲/">机器学习课程大纲</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/25/机器学习笔记（一）/">机器学习笔记（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/05/noSQL/">noSQL</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Fan Yaoxin.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
